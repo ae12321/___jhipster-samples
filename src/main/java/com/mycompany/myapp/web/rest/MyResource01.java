@@ -1,5 +1,6 @@
 package com.mycompany.myapp.web.rest;
 
+import com.mycompany.myapp.web.rest.dto.MyUser;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Value;
@@ -122,6 +123,18 @@ public class MyResource01 {
         var result = new HashMap<String, Object>();
         result.put("userName", "Mr." + userName);
         result.put("userAge", userAge * 2);
+
+        return ResponseEntity.ok().body(result);
+    }
+
+    // { "name": "bob", "age": 12 }: ok
+    // { "name": "bob", "age": 12, "hasBaby": true }: ok(指定外分は除外)
+    // { "name": "bob", "ageage": 12, "hasBaby": true }: ok(受け入れはＯＫ。ただし内部で処理するときはプリミティブ値のデフォルト)
+    @PostMapping("/asdf8")
+    public ResponseEntity<Map<String, Object>> asdf8(@RequestBody MyUser myUser) {
+        var result = new HashMap<String, Object>();
+        result.put("userName", "Mr." + myUser.name());
+        result.put("userAge", myUser.age() * 3);
 
         return ResponseEntity.ok().body(result);
     }
