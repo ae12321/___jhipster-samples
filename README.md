@@ -1,5 +1,26 @@
 # jhipster_samples
 
+```powershell
+
+# add environment values
+dir env:  # Get-ChildItem env:
+.\scripts\add-env.ps1
+dir env:
+
+
+
+# database run
+docker compose -f src/main/docker/postgresql.yml up -d
+docker compose -f src/main/docker/postgresql.yml down --volumes
+
+# run
+./mvnw -P-webapp
+npm start
+
+
+
+```
+
 This application was generated using JHipster 7.9.3, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v7.9.3](https://www.jhipster.tech/documentation-archive/v7.9.3).
 
 ## Project Structure

@@ -1,0 +1,19 @@
+{
+  "java.compile.nullAnalysis.mode": "automatic",
+
+  "editor.defaultFormatter": null,
+  "java.format.enabled": true,
+  "java.format.settings.url": ".vscode/java-formatter.xml",
+
+  "[java]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.formatOnType": true,
+    "editor.detectIndentation": false,
+    "editor.insertSpaces": true,
+    "editor.tabSize": 4
+  },
+  "[powershell]": {
+    "files.encoding": "shiftjis"
+  }
+}

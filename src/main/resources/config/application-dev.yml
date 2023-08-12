@@ -32,9 +32,9 @@ spring:
       indent-output: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:postgresql://localhost:5432/jhipster_samples
-    username: jhipster_samples
-    password:
+    url: ${MYAPP_DATABASE_URL}/${MYAPP_DATABASE_DB}
+    username: ${MYAPP_DATABASE_USERNAME}
+    password: ${MYAPP_DATABASE_PASSWORD}
     hikari:
       poolName: Hikari
       auto-commit: false
