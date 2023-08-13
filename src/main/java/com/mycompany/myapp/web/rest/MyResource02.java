@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -92,6 +93,21 @@ public class MyResource02 {
     public ResponseEntity<List<MyCustomData1>> asdf8() {
         List<Map<String, Object>> myJoinEmployees = companyRepository.getJoinedData().get();
         List<MyCustomData1> result = myJoinEmployees
+            .stream()
+            .map(one -> {
+                var mapper = new ObjectMapper();
+                var converted = mapper.convertValue(one, MyCustomData1.class);
+                return converted;
+            })
+            .toList();
+
+        return new ResponseEntity<List<MyCustomData1>>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/asdf9")
+    public ResponseEntity<List<MyCustomData1>> asdf9(@RequestParam("id") Long companyId) {
+        List<Map<String, Object>> myjoinCompanies = companyRepository.getJoinedData2(companyId).get();
+        List<MyCustomData1> result = myjoinCompanies
             .stream()
             .map(one -> {
                 var mapper = new ObjectMapper();

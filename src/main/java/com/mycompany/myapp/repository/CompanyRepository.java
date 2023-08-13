@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -30,4 +31,22 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
         nativeQuery = true
     )
     Optional<List<Map<String, Object>>> getJoinedData();
+
+    @Query(
+        value = """
+            select
+                a.company_id as company_id
+                , a.name as company_name
+                , a.published_at as company_published_at
+                , b.id as employee_id
+                , b.name as employee_name
+                , b.age as employee_age
+            FROM company a
+            left outer join employee b
+            on a.company_id = b.company_id
+            where a.company_id = :companyId
+            """,
+        nativeQuery = true
+    )
+    Optional<List<Map<String, Object>>> getJoinedData2(@Param("companyId") Long id);
 }
