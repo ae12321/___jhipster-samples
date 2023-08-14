@@ -1,10 +1,12 @@
 package com.mycompany.myapp.custom.dto;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,6 +20,9 @@ public class AuthorDetail {
 
     @Column(name = "author_age")
     private int age;
+
+    @OneToOne(mappedBy = "authorDetail", cascade = CascadeType.ALL)
+    private Author author;
 
     public Long getId() {
         return id;
@@ -38,5 +43,13 @@ public class AuthorDetail {
     @Override
     public String toString() {
         return "AuthorDetail [id=" + id + ", age=" + age + "]";
+    }
+
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 }

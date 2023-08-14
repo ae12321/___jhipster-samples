@@ -43,9 +43,13 @@ public class SampleResource {
     @GetMapping("/asdf1a")
     public void asdf1a(@RequestParam("id") Long id) {
         var author = authorRepository.findById(id).get();
+        System.out.println("-----");
         System.out.println(author);
+        System.out.println(author.getAuthorDetail());
 
         var authorDetail = authorDetailRepository.findById(id).get();
+        System.out.println("-----");
         System.out.println(authorDetail);
+        System.out.println(authorDetail.getAuthor());
     }
 }
