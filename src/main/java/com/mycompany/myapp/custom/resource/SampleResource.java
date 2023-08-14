@@ -84,4 +84,13 @@ public class SampleResource {
 
         authorRepository.save(author);
     }
+
+    @GetMapping("/asdf3")
+    public void asdf3(@RequestParam("id") Long id) {
+        var author = authorRepository.findById(id).get();
+        System.out.println(author);
+        // // onetomanyはfailed to lazily initialize a collection of role: com.mycompany.myapp.custom.dto.Author.books, could not initialize proxy - no Session
+        // // 簡単な対処方法は、fetch = FetchType.EAGER をAuthor.javaにつける
+        // System.out.println(author.getBooks());
+    }
 }
