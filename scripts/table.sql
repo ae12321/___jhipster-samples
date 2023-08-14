@@ -30,3 +30,11 @@ create table author_detail (
     author_age integer not null,
     primary key (author_detail_id)
 );
+drop table if exists book cascade;
+create table book (
+    book_id serial not null,
+    book_title varchar(100) not null,
+    author_id bigint not null,
+    primary key (book_id),
+    foreign key (author_id) references author(author_id)
+);
