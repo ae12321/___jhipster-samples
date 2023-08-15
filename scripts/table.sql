@@ -15,7 +15,9 @@ create table employee (
     foreign key (company_id) references company(company_id)
 );
 -- ----------------------------------------------------------------------
-
+-- author <- @OneToOne -> author_detail
+-- author <- @OneToMany(bi)    @ManyToOne -> book
+-- book <- @OneToMany(uni) -> book_review
 drop table if exists author cascade;
 create table author (
     author_id serial not null,
@@ -34,7 +36,16 @@ drop table if exists book cascade;
 create table book (
     book_id serial not null,
     book_title varchar(100) not null,
-    author_id bigint not null,
+    author_id bigint default null,
     primary key (book_id),
     foreign key (author_id) references author(author_id)
+);
+drop table if exists book_review cascade;
+create table book_review (
+    book_review_id serial not null,
+    book_review_description varchar(100) not null,
+    -- not nullにすると、bookRepository.save(book)の前に、review1-2を先に確定する必要がある
+    book_id bigint default null,
+    primary key (book_review_id),
+    foreign key (book_id) references book(book_id)
 );

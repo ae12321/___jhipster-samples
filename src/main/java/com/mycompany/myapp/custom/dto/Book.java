@@ -1,13 +1,17 @@
 package com.mycompany.myapp.custom.dto;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -28,6 +32,10 @@ public class Book {
     // bookテーブルの列名
     @JoinColumn(name = "author_id")
     private Author author;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "book_id", referencedColumnName = "book_id")
+    private List<BookReveiw> bookReviews;
 
     public Long getId() {
         return id;
@@ -56,5 +64,21 @@ public class Book {
     @Override
     public String toString() {
         return "Book [id=" + id + ", title=" + title + ", author=" + author + "]";
+    }
+
+    public List<BookReveiw> getBookReviews() {
+        return bookReviews;
+    }
+
+    public void setBookReviews(List<BookReveiw> bookReviews) {
+        this.bookReviews = bookReviews;
+    }
+
+    // 便利メソッド
+    public void add(BookReveiw review) {
+        if (bookReviews == null) {
+            bookReviews = new ArrayList<>();
+        }
+        bookReviews.add(review);
     }
 }

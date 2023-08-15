@@ -3,6 +3,7 @@ package com.mycompany.myapp.custom.resource;
 import com.mycompany.myapp.custom.dto.Author;
 import com.mycompany.myapp.custom.dto.AuthorDetail;
 import com.mycompany.myapp.custom.dto.Book;
+import com.mycompany.myapp.custom.dto.BookReveiw;
 import com.mycompany.myapp.custom.repository.AuthorDetailRepository;
 import com.mycompany.myapp.custom.repository.AuthorRepository;
 import com.mycompany.myapp.custom.repository.BookRepository;
@@ -118,5 +119,26 @@ public class SampleResource {
         book.setTitle("333");
         author.add(book);
         authorRepository.save(author);
+    }
+
+    @GetMapping("/asdf4")
+    public void asdf4(@RequestParam("id") Long id) {
+        // // 今回のメイン
+        Book book = new Book();
+        book.setTitle("book1");
+
+        System.out.println("-----------------------------------");
+        System.out.println("22222");
+        // bookに突っ込むもの
+        BookReveiw review1 = new BookReveiw();
+        review1.setDescription("review1");
+        book.add(review1);
+        BookReveiw review2 = new BookReveiw();
+        review2.setDescription("review2");
+        book.add(review2);
+
+        System.out.println("-----------------------------------");
+        System.out.println("33333");
+        bookRepository.save(book);
     }
 }
