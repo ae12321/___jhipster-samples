@@ -17,6 +17,10 @@ docker compose -f src/main/docker/postgresql.yml down --volumes
 ./mvnw -P-webapp
 npm start
 
+# 参考：
+https://www.bezkoder.com/jpa-one-to-many-unidirectional/
+
+https://www.javaguides.net/2022/02/spring-data-jpa-one-to-many-unidirectional-mapping.html
 
 
 ```

@@ -4,9 +4,11 @@ import com.mycompany.myapp.custom.dto.Author;
 import com.mycompany.myapp.custom.dto.AuthorDetail;
 import com.mycompany.myapp.custom.dto.Book;
 import com.mycompany.myapp.custom.dto.BookReveiw;
+import com.mycompany.myapp.custom.dto.Tag;
 import com.mycompany.myapp.custom.repository.AuthorDetailRepository;
 import com.mycompany.myapp.custom.repository.AuthorRepository;
 import com.mycompany.myapp.custom.repository.BookRepository;
+import com.mycompany.myapp.custom.repository.TagRepository;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.UUID;
@@ -22,11 +24,18 @@ public class SampleResource {
     private final AuthorRepository authorRepository;
     private final AuthorDetailRepository authorDetailRepository;
     private final BookRepository bookRepository;
+    private final TagRepository tagRepository;
 
-    public SampleResource(AuthorRepository authorRepository, AuthorDetailRepository authorDetailRepository, BookRepository bookRepository) {
+    public SampleResource(
+        AuthorRepository authorRepository,
+        AuthorDetailRepository authorDetailRepository,
+        BookRepository bookRepository,
+        TagRepository tagRepository
+    ) {
         this.authorRepository = authorRepository;
         this.authorDetailRepository = authorDetailRepository;
         this.bookRepository = bookRepository;
+        this.tagRepository = tagRepository;
     }
 
     @GetMapping("/asdf1")
@@ -139,6 +148,71 @@ public class SampleResource {
 
         System.out.println("-----------------------------------");
         System.out.println("33333");
+        bookRepository.save(book);
+    }
+
+    @GetMapping("/asdf5")
+    public void asdf5() {
+        Book book1 = new Book();
+        book1.setTitle("book1");
+
+        Tag tag1 = new Tag();
+        tag1.setName("tag1");
+        book1.addTag(tag1);
+        Tag tag2 = new Tag();
+        tag2.setName("tag2");
+        book1.addTag(tag2);
+
+        //
+        System.out.println("--------------------");
+        System.out.println(book1);
+        System.out.println(book1.getTags());
+
+        bookRepository.save(book1);
+    }
+
+    @GetMapping("/asdf6")
+    public void asdf6(@RequestParam("bookid") Long id) {
+        var book = bookRepository.findBooksAndTagsByBookId(id);
+
+        System.out.println("--------------------");
+        System.out.println(book);
+        System.out.println(book.getTags());
+    }
+
+    @GetMapping("/asdf7")
+    public void asdf7(@RequestParam("tagid") Long id) {
+        var tag = tagRepository.findTagsByTagId(id);
+
+        System.out.println("--------------------");
+        System.out.println(tag);
+        System.out.println(tag.getBooks());
+    }
+
+    @GetMapping("/asdf8")
+    public void asdf8() {
+        Long bookId = 13L; // すでに登録されている前提
+
+        // // asdf8 で既存に対し新規追加する場合
+        // // lazyfetchのため参照先が取得できず、addTagできない
+        // Book book = bookRepository.findById(bookId).get();
+
+        Book book = bookRepository.findBooksAndTagsByBookId(bookId);
+
+        System.out.println("--------------------");
+        System.out.println("1111");
+        System.out.println(book);
+        System.out.println(book.getTags());
+
+        Tag tag3 = new Tag();
+        tag3.setName("tag3");
+        book.addTag(tag3);
+
+        System.out.println("--------------------");
+        System.out.println("2222");
+        // System.out.println(book);
+        // System.out.println(book.getTags());
+
         bookRepository.save(book);
     }
 }

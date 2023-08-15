@@ -49,3 +49,17 @@ create table book_review (
     primary key (book_review_id),
     foreign key (book_id) references book(book_id)
 );
+drop table if exists tag cascade;
+create table tag (
+    tag_id serial not null,
+    tag_name varchar(100) not null,
+    primary key (tag_id)
+);
+drop table if exists book_tag cascade;
+create table book_tag (
+    book_id bigint not null,
+    tag_id bigint not null,
+    unique (book_id, tag_id),
+    foreign key (book_id) references book(book_id),
+    foreign key (tag_id) references tag(tag_id)
+);
