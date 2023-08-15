@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,7 +32,13 @@ public class Author {
     private AuthorDetail authorDetail;
 
     // Bookクラス内のauthorに対応するプロパティ名を指定
-    @OneToMany(mappedBy = "author", cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+    @OneToMany(
+        mappedBy = "author",
+        cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH },
+        // 1.
+        // fetch = FetchType.EAGER
+        fetch = FetchType.LAZY
+    )
     private List<Book> books;
 
     public Long getId() {
